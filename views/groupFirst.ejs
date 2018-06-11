@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="20">
+	<title>Document</title>
+	<style>
+		div,h1,h2,h3,h4,h5,span,p,input,img,textarea,ul,li{
+			margin: 0;
+			padding: 0;
+			font-size: 12px;
+		}
+		ul li{
+
+			list-style: none;
+		}
+		.container{
+			display: flex;
+			flex-direction: row;
+			margin: 0 auto;
+			width: 800px;
+			height: 600px;
+		}
+		.friendList{
+			width: 200px;
+			background: #eee;
+			flex-direction: column;
+			justify-content: center;
+			box-shadow: 0 0 10px #aaa;
+			margin-right: 2px;
+			overflow: auto;
+		}
+		.chat{
+			display: flex;
+			width: 600px;
+			/* margin: 0px auto; */
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px #aaa;
+			flex-direction: column;
+			background: #eee;
+			position: relative;
+
+		}
+		.friendList_body{
+			display: flex;
+		}
+		.friendList_body ul{
+			width: 100%;
+
+		}
+		.friendList_body ul li{
+			display: flex;
+			padding: 10px 20px;
+			align-items: center;
+			border-bottom: 1px solid #bbb;
+		}
+		.friendList_body ul li a{
+			display: inline-flex;
+			margin-left: 15px;
+		}
+		.head,.friendList_header{
+			display: flex;
+			justify-content: center;
+			border-bottom: 1px solid #ddd;
+		}
+		.friendList_header{
+			position: relative;
+		}
+		.friendList_header h4{
+			font-size: 16px;
+			padding:15px 0px;
+		}
+		.head h4{
+			display: flex;
+			font: 500 20px/40px "微软雅黑";
+		}
+		.content_top{
+			height: 400px;
+			margin-bottom: 10px;
+			overflow: auto;
+		}
+		.content{
+			display:flex;
+			flex-direction: column;
+			margin: 5px;
+			border: 1px solid #c9d2cd;
+			min-height: 388px;
+		}
+		.content_bottom{
+			padding-top: 10px;
+			margin: 10px 5px;
+			border-top: 1px solid #ddd;
+		}
+		.emit{
+			display: flex;
+			margin: 5px 0px;
+			width: 100%;
+		}
+		.emit_content{
+			display: flex;
+			flex-direction: column;
+			border-width: 1px;
+			padding: 0;
+			width: 100%;
+			resize: none;
+			outline: 0 none;
+			height: 80px;
+			font: 500 16px "微软雅黑";
+			padding-left: 5px;
+		}
+		.emit_btn{
+			display:flex;
+			justify-content: flex-end;
+		}
+		.reset,.submit{
+			display: flex;
+			padding: 10px 30px;
+			border-radius: 5px;
+			margin:10px;
+		}
+		.reset{
+			background: #f34f4fb3;
+			cursor: pointer;
+		}
+		.submit{
+			background: #38a5ffb8;
+			cursor: pointer;
+		}
+		.image{
+			display: inline-flex;
+			width: 55px;
+			height: 55px;
+			border-radius: 100%;
+		}
+
+		.message{
+			position: relative;
+			margin-left: 10px;
+			display: inline-flex;
+			padding: 10px 15px;
+			border: 1px solid #353232a1;
+			border-radius: 19px;
+			min-width: 30px;
+			max-width: 100px;
+			background: #158ed212;
+			top: 7px;
+			margin-bottom: 10px;
+		}
+		.message p{
+			max-width: 100px;
+			overflow-wrap: break-word;
+		}
+		.avatar{
+			margin-top: 5px;
+		}
+		.people{
+			display: inline-flex;
+			align-items: center;
+			margin-left: 10px;
+			margin-top: 20px;
+		}
+		.people .arrow{
+			top: 50%;
+			left: -16px;
+		}
+		.person{
+			display: inline-flex;
+			width: 200px;
+			align-items: center;
+			margin-left: 370px;
+			justify-content: flex-end;
+			margin-top: 20px;
+		}
+		.person .avatar{
+			order: 1;
+			margin-left: 10px;
+		}
+		.person .image{
+			order: 2;
+		}
+		.person .arrow {
+			top: 50%;
+			right: -16px;
+			transform: rotate(180deg)
+		}
+		.arrow{
+			position: absolute;
+			margin-top: -8px;
+			width: 0;
+			height: 0;
+			border-style:solid;
+			border-width: 8px;
+    		border-color:transparent #a8b1bdeb transparent transparent;
+		}
+		.nickother{
+			position: absolute;
+		    top: -25px;
+		    left: 1px;
+		    color: #777575;
+		    min-width: 100px;
+		}
+		.nick{
+			position: absolute;
+		    top: -25px;
+		    right: -15px;
+		    color: #777575;
+		    min-width: 100px;
+		    text-align: right;
+		}
+		.emitDate{
+			font-size: 12px;
+			color: #9999;
+			position: absolute;
+			top: 60%;
+			left: -108px;
+		}
+		.emitDatePeople{
+			font-size: 12px;
+			color: #9999;
+			position: absolute;
+			top: 70%;
+			right: -108px;
+		}
+		.online{
+			position: absolute;
+			bottom: 0;
+			right: 3px;
+			color: red;
+		}
+		.count{
+			position: absolute;
+			bottom: 0;
+			left: 0px;
+			color: red;
+		}
+		.imageContainer{
+			position: relative;
+		}
+		.options{
+			padding: 10px 20px;
+		}
+		.gif,.static{
+			display: inline-block;
+			padding: 3px 10px;
+			margin-right: 15px;
+			background: #0fc3e8a8;
+			cursor: pointer;
+		}
+		.imageList,.imageList1{
+			padding: 20px;
+			position: absolute;
+			top: -245px;
+			left: 0;
+			background: #d0c9c9;
+			width: 530px;
+			height: 205px;
+			border: 1px solid #ccc;
+			border-bottom: 0;
+			box-shadow: inset 0 5px 10px rgba(0,0,0,0.65);
+			display: none;
+		}
+		.imageList ul li,.imageList1 ul li{
+			float: left;
+			margin: 5px;
+			border: 1px solid #b59a40;
+			cursor: pointer;
+		}
+		.imageList ul li:hover,.imageList1 ul li:hover{
+			border: 1px solid #e2b315;
+			box-shadow: 0 0 5px #e2b315;
+		}
+		.active{
+			background: #0fc3e8;
+			box-shadow: inset 0 2px 3px rgba(0,0,0,0.65);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<a href="javascript:;" class="goback">返回</a>
+		<div class="friendList">
+			<div class="friendList_header">
+				<h4>好友列表</h4>
+				<small class="count">总人数：<%= userCount%></small>
+				<small class="online">在线人数：<%= onlineCount%></small>
+			</div>
+			<div class="friendList_body">
+				<ul>
+					<% for(var i = 0,len = UserList.length; i< len ; i++ ) {%>
+						<% if(UserList[i].username!==UserIdentity){%>
+							<li><img src="/image/yy.jpg" alt="" class="image"><a href=""><%= UserList[i].nickName%></a></li>
+						<%}%>
+						
+					<%}%>
+				</ul>
+			</div>
+		</div>
+		<div class="chat">
+			<div class="head">
+				<h4 class="headLine">聊天</h4>
+			</div>
+			<div class="content_top">
+				<div class="content">
+					<% for( var i = 0 , len = SayList.length ; i < len ; i++ ){ %>
+						<% if(SayList[i].UserIdentity === UserIdentity){ %>
+							<div class="person">
+								<a class="avatar"><img src="/image/yy.jpg" class="image"></a>
+								<div class="message">
+									<div class="arrow"></div>
+									<span class="nick"><%=SayList[i].userNick%></span>
+									<% if(SayList[i].img ==""){%>
+										<p class="sayWhat"><%=SayList[i].say%></p>
+									<%}else{%>
+										<img src="<%=SayList[i].img%>" data-src="<%=SayList[i].img%>" class="image" alt="">
+									<%}%>
+									<sapn class="emitDate"><%= SayList[i].date%></sapn>
+								</div>
+							</div>
+						<%}else{%>
+							<div class="people">
+								<a class="avatar"><img src="/image/yy.jpg"  class="image"></a>
+								<div class="message">
+									<div class="arrow"></div>
+									<span class="nickother"><%=SayList[i].userNick%></span>
+									<% if(SayList[i].img ==""){%>
+										<p class="otherSayWhat"><%=SayList[i].say%></p>
+									<%}else{%>
+										<img src="<%=SayList[i].img%>" data-src="<%=SayList[i].img%>" class="image" alt="">
+									<%}%>
+									<sapn class="emitDatePeople"><%=SayList[i].date%></sapn>
+								</div>
+							</div>
+						<%}%>
+					<% }%>
+				</div>
+			</div>
+			<div class="content_bottom">
+				<div class="imageContainer">
+					<div class="options">
+						<span class="gif">GIF图</span>
+						<span class="static">STATIC图</span>
+					</div>
+					<div class="imageList">
+						<ul>
+							<li ><img src="/img/0.gif" alt="" data-src="/img/0.gif" class="image"></li>
+							<li ><img src="/img/1.gif" alt="" data-src="/img/1.gif" class="image"></li>
+							<li ><img src="/img/2.gif" alt="" data-src="/img/2.gif" class="image"></li>
+							<li ><img src="/img/3.gif" alt="" data-src="/img/3.gif" class="image"></li>
+							<li ><img src="/img/4.gif" alt="" data-src="/img/4.gif" class="image"></li>
+							<li ><img src="/img/5.gif" alt="" data-src="/img/5.gif" class="image"></li>
+							<li ><img src="/img/6.gif" alt="" data-src="/img/6.gif" class="image"></li>
+							<li ><img src="/img/7.gif" alt="" data-src="/img/7.gif" class="image"></li>
+							<li ><img src="/img/8.gif" alt="" data-src="/img/8.gif" class="image"></li>
+							<li ><img src="/img/9.gif" alt="" data-src="/img/9.gif" class="image"></li>
+							<li><img src="/img/10.gif"  alt="" data-src="/img/10.gif" class="image"></li>
+							<li><img src="/img/11.gif"  alt="" data-src="/img/11.gif" class="image"></li>
+							<li><img src="/img/12.gif"  alt="" data-src="/img/12.gif" class="image"></li>
+							<li><img src="/img/13.gif"  alt="" data-src="/img/13.gif" class="image"></li>
+							<li><img src="/img/14.gif"  alt="" data-src="/img/14.gif" class="image"></li>
+							<li><img src="/img/15.gif"  alt="" data-src="/img/15.gif" class="image"></li>
+						</ul>
+					</div>
+					<div class="imageList1">
+						<ul>
+							<li ><img src="/img1/1000mb.ru(1).ico" alt="" data-src="/img1/1000mb.ru(1).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(2).ico" alt="" data-src="/img1/1000mb.ru(2).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(3).ico" alt="" data-src="/img1/1000mb.ru(3).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(4).ico" alt="" data-src="/img1/1000mb.ru(4).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(5).ico" alt="" data-src="/img1/1000mb.ru(5).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(6).ico" alt="" data-src="/img1/1000mb.ru(6).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(7).ico" alt="" data-src="/img1/1000mb.ru(7).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(8).ico" alt="" data-src="/img1/1000mb.ru(8).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(9).ico" alt="" data-src="/img1/1000mb.ru(9).ico" class="image"></li>
+							<li ><img src="/img1/1000mb.ru(10).ico" alt="" data-src="/img1/1000mb.ru(10).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(11).ico"  alt="" data-src="/img1/1000mb.ru(11).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(12).ico"  alt="" data-src="/img1/1000mb.ru(12).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(13).ico"  alt="" data-src="/img1/1000mb.ru(13).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(14).ico"  alt="" data-src="/img1/1000mb.ru(14).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(15).ico"  alt="" data-src="/img1/1000mb.ru(15).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(16).ico"  alt="" data-src="/img1/1000mb.ru(16).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(17).ico"  alt="" data-src="/img1/1000mb.ru(17).ico" class="image"></li>
+							<li><img src="/img1/1000mb.ru(18).ico"  alt="" data-src="/img1/1000mb.ru(18).ico" class="image"></li>
+						</ul>
+					</div>
+				</div>
+				<div class="emit">
+					<textarea name="" class="emit_content" autofocus placeholder="请输入您想说的..."></textarea>
+				</div>
+				<div class="emit_btn">
+					<span class="reset">重置</span>
+					<span class="submit">发送</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="/js/socket.io.js"></script>
+<script>
+	function cloneDiv(emitStr,pareDiv,imgPath,sayWhat,date,nickStyle,nickname,img_src,flag){
+		let content = document.getElementsByClassName('content')[0];
+		let fragement = document.createDocumentFragment();
+		let peopleDiv  = document.createElement('div');
+		let a  = document.createElement('a');
+		let img  = document.createElement('img');
+		let messageDiv = document.createElement('div');
+		let arrowDiv = document.createElement('div');
+		let span = document.createElement('sapn');
+		let span1 = document.createElement('sapn');
+		if(flag === 1){
+			let p = document.createElement('p');
+			p.className = sayWhat;
+			p.innerHTML = emitStr;
+			messageDiv.appendChild(p);
+		}else{
+			let img1 = document.createElement('img');
+			img1.className = "image";
+			img1.src = img_src;
+			img1["data-src"] = img_src;
+			messageDiv.appendChild(img1);
+		}
+		span.className = pareDiv=="people"?"emitDatePeople":"emitDate";
+		span.innerHTML = date;
+		span1.className = nickStyle;
+		peopleDiv.className = pareDiv;
+		span1.innerHTML = nickname;
+		a.className = "avatar";
+		img.src = imgPath;
+		img.className = "image";
+		a.appendChild(img);
+		messageDiv.className = "message";//一样
+		arrowDiv.className = "arrow";//一样
+		messageDiv.appendChild(arrowDiv);
+		messageDiv.appendChild(span1);
+		messageDiv.appendChild(span);
+		peopleDiv.appendChild(a);
+		peopleDiv.appendChild(messageDiv);
+		fragement.appendChild(peopleDiv);
+		content.appendChild(fragement);
+	}
+(function(){
+	let socket = io.connect('ws://localhost:3000/groupFirst');
+	const url = "http://localhost:3000";
+	let inp = document.getElementsByClassName("emit_content")[0];
+	let submit = document.getElementsByClassName("submit")[0];
+	let resetBtn = document.getElementsByClassName("reset")[0];
+	var flag = true;
+	var img_src = "";
+	scroll();
+	document.getElementsByClassName("imageContainer")[0].addEventListener("click", toggle, false);
+	document.getElementsByClassName("goback")[0].addEventListener("click",goback1,false);
+	inp.onkeyup = function(event){
+		if(event.keyCode ===13){
+			emit("",1);
+		}
+	}
+	function emit(imgSrc,flag){
+		let data = inp.value.trim();
+		let date = Date.parse(new Date().toJSON());
+		let user = getCookie();
+		let img = imgSrc;
+		let msg = {};
+		if(data){
+			 msg = {data,date,user};
+		}else{
+			msg = {date,user,img};
+		}
+		socket.emit('groupChatFirst',msg);
+		cloneDiv(data,"person","/image/yy.jpg","sayWhat",new Date(date).toDateString(),"nick",decodeURIComponent(user.nickName),imgSrc,flag);
+		scroll();
+		inp.value = "";
+	}
+	function getCookie(){
+		let cookies = document.cookie;
+		let cookieArr = cookies.split(';');
+		let cookieList = [];
+		let username = '';
+		let nickName = '';
+		for(let i of cookieArr){
+			cookieList.push(i.trim().split('='));
+		}
+		cookieList.forEach(item=>{
+			item.forEach(val=>{
+				if(val === 'username'){
+					username = item[item.length-1];
+					return ;
+				}
+				if(val === 'nickName'){
+					nickName = item[item.length-1];
+					return ;
+				}
+			});
+		});
+		return {username,nickName};
+	}
+	submit.onclick=function(){
+		let result = inp.value.trim();
+		if(result === ''){
+			alert('输入不能为空!');
+		}else{
+			emit("",1);
+		}
+	}
+	resetBtn.onclick=function(){
+		inp.value="";
+	}
+	socket.on("otherEmit",(res)=>{
+		if(res.data){
+			cloneDiv(res.data,"people","/image/yy.jpg","otherSayWhat",new Date(parseInt(res.date)).toDateString(),"nickother",res.nick,"",1);
+				scroll()
+		}else{
+			cloneDiv("","people","/image/yy.jpg","otherSayWhat",new Date(parseInt(res.date)).toDateString(),"nickother",res.nick,res.img,0);
+				scroll();
+		}
+	})
+	function goback1(){
+		let user = getCookie();
+		console.log(user);
+		socket.emit("userCut",{user});
+			history.back(-1);
+	}
+	function toggle(event){
+		let target = event.target;
+		let nodeName = target.nodeName.toLowerCase();
+		let imageList = document.getElementsByClassName("imageList")[0];
+		let imageList1 = document.getElementsByClassName("imageList1")[0];
+		let gif = document.getElementsByClassName("gif")[0];
+		let static = document.getElementsByClassName("static")[0];
+		switch(nodeName){
+			case "span":
+						if(target.className ==="gif"){
+							target.parentNode.nextElementSibling.style.display = "block";
+							target.parentNode.nextElementSibling.nextElementSibling.style.display = "none";
+						}else{
+							target.parentNode.nextElementSibling.nextElementSibling.style.display = "block";
+							target.parentNode.nextElementSibling.style.display = "none";
+						}
+						break;
+			 case "img":img_src = target["src"];
+			 			emit(img_src,0);
+			 			imageList.style.display = "none";
+			 			imageList1.style.display = "none";
+			 			flag = true;
+			 			break;
+			 case "div":imageList.style.display = "none";
+			 			imageList1.style.display = "none";
+			 			flag = true;
+			 			break;
+			}
+		}
+
+		function scroll(){
+			let contentTop = document.getElementsByClassName("content_top")[0];
+			let content = document.getElementsByClassName("content")[0];
+			let H = content.scrollHeight;
+			contentTop.scrollTop = H;
+		}
+
+	})()
+
+		
+</script>
+</html>

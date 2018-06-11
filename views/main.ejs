@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<style>
+	ul,li,div,span,p,h3,body,html{
+		margin: 0;
+		padding: 0;
+	}
+	ul li {
+		list-style: none;
+	}
+	a{
+		text-decoration: none;		
+	}
+	body{
+		background: #ddddddb0;
+	}
+	.grounpChat-container{
+		width: 600px;
+		/* border: 1px solid red; */
+		margin: 40px auto;
+	}
+	.groupChat-top h3{
+		text-align: center;
+		font: 500 18px "微软雅黑";
+		padding: 10px 30px;
+		background: #3ffb2629;
+		box-shadow:inset 0 0 10px #41b5514d;
+
+	}
+	.content-groupChat h4,.content-contact h4{
+		font: 500 16px "微软雅黑";
+		padding: 8px 4px;
+		background: #26d8b552;
+		margin-bottom: 10px;
+	}
+	.content-group ul li{
+		padding: 5px 30px;
+		background: #ff53005c;
+		margin-bottom: 5px;
+		font:12px/1.5 tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
+	}
+	.content-group ul li:hover{
+		/* color:#fff; */
+		background: #ff53006b;
+	}
+	.content-group ul li a{
+		color:#774a13;
+	}
+	</style>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<div class="grounpChat-container">
+		<div class="groupChat-top">
+			<h3><a href="/loginout">退出登录</a></h3>
+		</div>
+		<div class="groupChat-top">
+			<h3>聊天分栏</h3>
+		</div>
+		<div class="groupChat-content">
+			<div class="content-groupChat">
+				<h4>群聊分组</h4>
+				<div class="content-group">
+					<ul>
+						<li><a href="/groupChatFirst">群聊1</a></li>
+						<li><a href="/groupChatSecond">群聊2</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="content-contact">
+				<h4>联系人</h4>
+				<div class="content-group">
+					<ul>
+						<li><a href="">联系人1</a></li>
+						<li><a href="">联系人2</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="groupChat-bottom">
+			
+		</div> -->
+	</div>
+</body>
+</html>

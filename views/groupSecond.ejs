@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div,h1,h2,h3,h4,h5,span,p,input,img,textarea{
+			margin: 0;
+			padding: 0;
+			font-size: 12px;
+		}
+		.chat{
+			display: flex;
+			width: 600px;
+			margin: 0px auto;
+			border: 1px solid #ddd;
+			box-shadow: 0 0 10px #aaa;
+			flex-direction: column;
+			background: #eee;
+			position: relative;
+
+		}
+		.head{
+			display: flex;
+			justify-content: center;
+			border-bottom: 1px solid #ddd;
+		}
+		.head h4{
+			display: flex;
+			font: 500 20px/40px "微软雅黑";
+		}
+		.content_top{
+			height: 400px;
+			margin-bottom: 10px;
+			overflow: auto;
+		}
+		.content{
+			display:flex;
+			flex-direction: column;
+			margin: 5px;
+			border: 1px solid #c9d2cd;
+			min-height: 388px;
+		}
+		.content_bottom{
+			padding-top: 10px;
+			margin: 10px 5px;
+			border-top: 1px solid #ddd;
+		}
+		.emit{
+			display: flex;
+			margin: 5px 0px;
+			width: 100%;
+		}
+		.emit_content{
+			display: flex;
+			flex-direction: column;
+			border-width: 1px;
+			padding: 0;
+			width: 100%;
+			resize: none;
+			outline: 0 none;
+			height: 80px;
+			font: 500 16px "微软雅黑";
+			padding-left: 5px;
+		}
+		.emit_btn{
+			display:flex;
+			justify-content: flex-end;
+		}
+		.reset,.submit{
+			display: flex;
+			padding: 10px 30px;
+			border-radius: 5px;
+			margin:10px;
+		}
+		.reset{
+			background: #f34f4fb3;
+			cursor: pointer;
+		}
+		.submit{
+			background: #38a5ffb8;
+			cursor: pointer;
+		}
+		.image{
+			width: 50px;
+			border-radius: 100%;
+		}
+
+		.message{
+			position: relative;
+			margin-left: 10px;
+			display: inline-flex;
+			padding: 10px 15px;
+			border: 1px solid #353232a1;
+			border-radius: 19px;
+			min-width: 30px;
+			max-width: 100px;
+			background: #158ed212;
+		}
+		.message p{
+			max-width: 100px;
+			overflow-wrap: break-word;
+		}
+		.avatar{
+			margin-top: 5px;
+		}
+		.people{
+			display: inline-flex;
+			align-items: center;
+			margin-left: 10px;
+		}
+		.people .arrow{
+			top: 50%;
+			left: -16px;
+		}
+		.person{
+			display: inline-flex;
+			width: 200px;
+			align-items: center;
+			margin-left: 370px;
+			justify-content: flex-end
+		}
+		.person .avatar{
+			order: 1;
+			margin-left: 10px;
+		}
+		.person .image{
+			order: 2;
+		}
+		.person .arrow {
+			top: 50%;
+			right: -16px;
+			transform: rotate(180deg)
+		}
+		.arrow{
+			position: absolute;
+			margin-top: -8px;
+			width: 0;
+			height: 0;
+			border-style:solid;
+			border-width: 8px;
+    		border-color:transparent #a8b1bdeb transparent transparent;
+		}
+		.emitDate{
+			font-size: 12px;
+			color: #9999;
+			position: absolute;
+			top: 70%;
+			left: -140px;
+		}
+		.emitDatePeople{
+			font-size: 12px;
+			color: #9999;
+			position: absolute;
+			top: 70%;
+			right: -140px;
+		}
+	</style>
+</head>
+<body>
+	<div class="chat">
+		<div class="head">
+			<h4 class="headLine">聊天</h4>
+		</div>
+		<div class="content_top">
+			<div class="content">
+			</div>
+		</div>
+		<div class="content_bottom">
+			<div class="emit">
+				<textarea name="" class="emit_content" autofocus placeholder="请输入您想说的..."></textarea>
+			</div>
+			<div class="emit_btn">
+				<span class="reset">重置</span>
+				<span class="submit">发送</span>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../public/socket.io.js"></script>
+<script>
+	function cloneDiv(emitStr,pareDiv,imgPath,sayWhat,date){
+		let content = document.getElementsByClassName('content')[0];
+		let fragement = document.createDocumentFragment();
+		let peopleDiv  = document.createElement('div');
+		let a  = document.createElement('a');
+		let img  = document.createElement('img');
+		let messageDiv = document.createElement('div');
+		let arrowDiv = document.createElement('div');
+		let p = document.createElement('p');
+		let span = document.createElement('sapn');
+		span.className = pareDiv=="people"?"emitDatePeople":"emitDate";
+		span.innerHTML = date;
+		peopleDiv.className = pareDiv;
+		a.className = "avatar";
+		img.src = imgPath;
+		img.className = "image";
+		a.appendChild(img);
+		messageDiv.className = "message";//一样
+		arrowDiv.className = "arrow";//一样
+		p.className = sayWhat;
+		p.innerHTML = emitStr;
+		messageDiv.appendChild(arrowDiv);
+		messageDiv.appendChild(p);
+		messageDiv.appendChild(span);
+		peopleDiv.appendChild(a);
+		peopleDiv.appendChild(messageDiv);
+		fragement.appendChild(peopleDiv);
+		content.appendChild(fragement);
+	}
+
+	(function(){
+			const url = "http://localhost:3000";
+
+			let inp = document.getElementsByClassName("emit_content")[0];
+
+			let submit = document.getElementsByClassName("submit")[0];
+
+			let resetBtn = document.getElementsByClassName("reset")[0];
+
+			let socket = io.connect(url);
+
+			inp.onkeyup = function(event){
+
+				if(event.keyCode ===13){
+
+					emit();
+				}
+			}
+
+			function emit(){
+
+				let result = inp.value.trim();
+
+				let date = new Date().toLocaleString();
+
+				socket.emit('con',{data:result,date:date});
+				
+				cloneDiv(result,"person","yy.jpg","sayWhat",date);
+
+				inp.value = "";
+			}
+
+			submit.onclick=function(){
+
+				let result = inp.value.trim();
+
+				emit();
+
+			}
+			resetBtn.onclick=function(){
+
+				inp.value="";
+			}
+
+			socket.on("otherEmit",(res)=>{
+				
+				cloneDiv(res.data,"people","yy.jpg","otherSayWhat",res.date);
+
+			})
+	})()
+</script>
+</html>

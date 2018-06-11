@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+	div,label,span,h3,input{
+		margin: 0;
+		padding: 0;
+	}
+	input{
+		outline: 0 none;
+		height: 25px;
+		padding-left:4px;
+	}
+	.login-container{
+		width: 330px;
+		height: 360px;
+		border: 1px solid black;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -150px 0 0 -150px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 30px;
+		box-shadow: 0 0 10px #48bb46d9;
+	}
+	.btn-group{
+		margin-top: 40px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.reset,.submit{
+		display: inline-flex;
+		outline: 0 none;
+		border: 0 none;
+		padding: 7px 20px;
+		border-radius: 5px;
+		margin: 0 10px;
+	}
+	.reset{
+		background: #f34f4fb3;
+		cursor: pointer;
+	}
+	.submit{
+		padding: 10px 70px;
+		background: #38a5ffb8;
+		cursor: pointer;
+		font-size: 18px;
+	}
+	.username,.pwd{
+		font-size: 16px;
+	}
+	.skip{
+		color: red;
+		font-size: 14px;
+		text-align: center;
+		display: block;
+		height: 20px;
+	}
+	</style>
+</head>
+<body>
+	<div class="login-container">
+		<h3>注册</h3>
+		<form action="/regsiterContro" method="post" accept-charset="utf-8">
+			<p><span class="skip"><%=msg%></span></p>
+			<p class="username"><label>用户名：&nbsp;&nbsp;&nbsp;<input type="text" name="username" value="" id="user"></label></p>
+			<p class="username"><label>昵&nbsp;&nbsp;&nbsp;称：&nbsp;&nbsp;&nbsp;<input type="text" name="nickName" value="" id="nick"></label></p>
+			<p class="pwd"><label>密&nbsp;&nbsp;&nbsp;码：&nbsp;&nbsp;&nbsp;<input type="password" name="password" value="" id="userPwd"></label></p>
+			<p class="pwd"><label>确认密码：<input type="password" name="confirm_pwd" value="" id="confirm_Pwd"></label></p>
+			<p class="btn-group"><button type="submit" class="submit">注册</button></p>
+		</form>
+	</div>
+</body>
+</html>

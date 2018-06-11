@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+	div,label,span,h3,input{
+		margin: 0;
+		padding: 0;
+	}
+	input{
+		outline: 0 none;
+		height: 25px;
+		padding-left:4px;
+	}
+	.login-container{
+		width: 300px;
+		height: 300px;
+		border: 1px solid black;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -150px 0 0 -150px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		border-radius: 30px;
+		box-shadow: 0 0 10px #48bb46d9;
+	}
+	.btn-group{
+		margin-top: 20px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.reset,.submit{
+		display: inline-flex;
+		outline: 0 none;
+		border: 0 none;
+		padding: 7px 20px;
+		border-radius: 5px;
+		margin: 0 10px;
+	}
+	.reset{
+		background: #f34f4fb3;
+		cursor: pointer;
+	}
+	.submit{
+		background: #38a5ffb8;
+		cursor: pointer;
+	}
+	.username,.pwd{
+		font-size: 16px;
+	}
+	.isRegsiter{
+		text-align: right;
+	}
+	.isRegsiter a{
+		font-size: 14px;
+		color: #999;
+	}
+	.isRegsiter a:hover{
+		color: #333;
+	}
+	</style>
+</head>
+<body>
+	<div class="login-container">
+		<h3>登录</h3>
+		<form action="/mainFrame" method="post" accept-charset="utf-8">
+			<p class="username"><label>昵&nbsp;&nbsp;&nbsp;称:<input type="text" name="nickName" value="" id="nick"></label></p>
+			<p class="username"><label>用户名:<input type="text" name="username" value="" id="user"></label></p>
+			<p class="pwd"><label>密&nbsp;&nbsp;&nbsp;码:<input type="password" name="password" value="" id="userPwd"></label></p>
+			<p class="isRegsiter"><a href="/regsiter">点击注册</a></p>
+			<p class="btn-group"><button type="reset" class="reset">重置</button><button type="submit" class="submit">登录</button></p>
+		</form>
+	
+	</div>
+</body>
+<!-- <script src="../public/js/jquery.js"></script>
+<script>
+	(function(){
+		let user = $('#user');
+		let pwd = $("#userPwd");
+		let submit = $('.submit')[0];
+		submit.addEventListener('click',login,false);
+		function login(){
+			let username = user.val();
+			let password = pwd.val();
+			$.ajax({
+				url:'/mainFrame',
+				type:'post',
+				data:{
+					username:username,
+					password:password
+				},
+				success:(data)=>{
+					// window.href=data.url;
+					console.log(data);
+				},
+				error:(err)=>{
+					// alert(err);
+					console.log('111')
+				}
+			})
+		}
+	}())
+</script> -->
+</html>
