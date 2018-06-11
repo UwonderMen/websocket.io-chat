@@ -2,7 +2,13 @@
 
 >用nodejs+mongo+websocket做的简单聊天系统
 
-![mainImg]()
+![mainImg](https://github.com/UwonderMen/websocket.io-chat/blob/master/public/README/gif5%E6%96%B0%E6%96%87%E4%BB%B6.gif)
+
+![img1](https://github.com/UwonderMen/websocket.io-chat/blob/master/public/README/)
+![img1](https://github.com/UwonderMen/websocket.io-chat/blob/master/public/README/)
+![img1](https://github.com/UwonderMen/websocket.io-chat/blob/master/public/README/)
+![img1](https://github.com/UwonderMen/websocket.io-chat/blob/master/public/README/)
+
 
 
 >主要功能：只实现了群聊这部分、两个人之间的聊天怎么更新中、可以看见在线人数、群中总人数、列出了在线的用户、能发图片、用户退出后在进入可以看到历史消息(不是缓存)
